@@ -5,31 +5,23 @@ import com.quimba.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/users")
+@RequestMapping(path = "api/v1/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping
-    public List<User> getAll(){
-        return userService.getAllUsers();
-    }
 
     @GetMapping("/{user_id}")
     public Optional<User> getById(@PathVariable("user_id") Long user_id){
         return userService.getUserById(user_id);
     }
 
-    @PostMapping
-    public void saveUpdate(@RequestBody User user){
-        userService.saveOrUpdateUser(user);
+    @PostMapping("/register")
+    public void registerUser(@RequestBody User user){
+        userService.registerUser(user);
     }
 
     @DeleteMapping("/{user_id}")
