@@ -11,6 +11,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        quimba: "#02FFC2"
+      },
+      fontFamily: {
+        right: ['var(--font-right)', 'sans-serif'],  // Custom font variable
       },
     },
   },

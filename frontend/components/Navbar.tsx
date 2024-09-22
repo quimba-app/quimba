@@ -1,58 +1,22 @@
 import React from 'react';
-import Link from 'next/link';
-import { MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon, MapPinIcon } from '@heroicons/react/24/outline'; // Hero Icons for example
-
-const Navbar: React.FC = () => {
+import { FaShoppingCart, FaUser } from 'react-icons/fa';
+const NavBar: React.FC = () => {
   return (
-    <nav className="bg-black text-white">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <Link href="/">
-              {/* Add your logo image here */}
-              <img src="/logo.png" alt="Quimba Logo" className="h-8 w-8" />
-              <span className="ml-2 text-lg font-bold text-teal-400">Quimba</span>
-            
-          </Link>
-        </div>
+    <nav className="bg-black p-4 flex flex-col md:flex-row justify-between items-center">
+      <div className="flex items-center space-x-2">
+        <img src="/qlogo.png" alt="Quimba Logo" className="h-16" />
+        <span className="text-quimba text-4xl font-bold">Quimba</span>
+      </div>
 
-        {/* Search Bar */}
-        <div className="relative flex items-center w-full max-w-md mx-4">
-          <input
-            type="text"
-            placeholder="WHO / WHEN / WHERE?"
-            className="w-full py-2 px-4 text-black rounded-full focus:outline-none focus:ring-2 focus:ring-teal-400"
-          />
-          <button className="absolute right-2">
-            <MagnifyingGlassIcon className="h-5 w-5 text-teal-400" />
-          </button>
+      <div className="flex items-center space-x-4 mt-4 md:mt-0">
+        <div className="bg-quimba text-black font-bold px-3 py-1 rounded">
+          PR, 00918
         </div>
-
-        {/* Icons and Other Links */}
-        <div className="flex items-center space-x-4">
-          {/* Location */}
-          <div className="flex items-center">
-            <MapPinIcon className="h-6 w-6 text-teal-400" />
-            <span className="ml-1">PR, 00918</span>
-          </div>
-          
-          {/* Cart */}
-          <Link href="/cart">
-          
-              <ShoppingCartIcon className="h-6 w-6 text-teal-400" />
-            
-          </Link>
-
-          {/* User Profile */}
-          <Link href="/profile">
-          
-              <UserCircleIcon className="h-6 w-6 text-teal-400" />
-            
-          </Link>
-        </div>
+        <FaShoppingCart className="text-quimba text-2xl" />
+        <FaUser className="text-quimba text-2xl" />
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default NavBar;
