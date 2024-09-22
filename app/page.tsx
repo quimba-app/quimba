@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import EventsGrid from "@/components/EventGrid";
-import Image from "next/image";
 import MerchGrid from "@/components/MerchGrid";
 import Footer from "@/components/Footer";
 

@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         {/* Subscription section */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-10">
           <div className="flex flex-col mb-6 md:mb-0">
-            <h3 className="text-2xl font-semibold">Don't Miss Out</h3>
+            <h3 className="text-2xl font-semibold">Dont Miss Out</h3>
             <p>Sign up for the latest events, promotions, and updates from Quimba.</p>
           </div>
 
