@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import EventHeader from "@/components/EventHeader";
 import NavBar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
