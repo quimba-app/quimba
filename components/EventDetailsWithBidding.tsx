@@ -19,8 +19,6 @@ const EventDetailsWithBidding: React.FC<EventDetailsWithBiddingProps> = ({
   description,
   imgUrl,
   liveStatus,
-  availableSeats,
-  capacity,
   venue,
   currentBid,
   buyNowPrice,

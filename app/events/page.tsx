@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EventHeader from "@/components/EventHeader";
 import NavBar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
@@ -36,9 +36,9 @@ export default function EventPage() {
   const router = useRouter();
 
   // State for event information
-  const [eventInfo, setEventInfo] = useState<EventInfo | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [eventInfo, setEventInfo] = useState<EventInfo | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
   const mockTickets: Ticket[] = [
     {
@@ -94,7 +94,7 @@ export default function EventPage() {
     tickets: [],
   };
 
-  const handleTicketClick = (ticketId: number) => {
+  const handleTicketClick = () => {
     router.push(`/events/ticket`);  // Navigates to /events/ticket?id={ticketId}
   };
 
@@ -166,7 +166,7 @@ export default function EventPage() {
               <div
               key={ticket.id}
               className="cursor-pointer"
-              onClick={() => handleTicketClick(ticket.id)}  // Navigates to ticket detail page on click
+              onClick={() => handleTicketClick()}  // Navigates to ticket detail page on click
             >
               <TicketCard
                 key={index}

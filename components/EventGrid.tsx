@@ -45,7 +45,7 @@ const EventsGrid: React.FC<EventsGridProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleTicketClick = (ticketId: number) => {
+  const handleTicketClick = () => {
     router.push(`/events/`); // Navigates to /events/ticket?id={ticketId}
   };
 
@@ -77,7 +77,7 @@ const EventsGrid: React.FC<EventsGridProps> = ({
           <div
             key={mockEvent.id}
             className="cursor-pointer"
-            onClick={() => handleTicketClick(mockEvent.id)} // Navigates to ticket detail page on click
+            onClick={() => handleTicketClick()} // Navigates to ticket detail page on click
           >
             <EventCard
               key={index}

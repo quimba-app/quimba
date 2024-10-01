@@ -1,9 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import EventDetailsWithBidding from "@/components/EventDetailsWithBidding";
-import EventDetails from "@/components/EventDetails";
 import EventSpecs from "@/components/EventSpecs";
 import EventAbout from "@/components/EventAbout";
 import TicketSales from "@/components/TicketSales";
@@ -33,7 +31,6 @@ interface Event {
 }
 
 export default function TicketDetailsPage() {
-  const router = useRouter();
 
   // State to store event and tickets
   const [event, setEvent] = useState<Event | null>(null);
