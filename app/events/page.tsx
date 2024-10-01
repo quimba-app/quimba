@@ -1,206 +1,145 @@
-import EventHeader from '@/components/EventHeader'
-import NavBar from '@/components/Navbar'
-import Sidebar from '@/components/Sidebar' // Assuming Sidebar and TicketCard exist
-import TicketCard from '@/components/TicketCard'
-import React from 'react'
+"use client";
 
-const tickets = [
-  {
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },{
-    section: '115',
-    row: 'B',
-    seat: '18',
-    price: 270,
-    imageUrl: '/ticket1.jpg',
-    isBid: false
-  },
-  {
-    section: '119',
-    row: 'C',
-    seat: '11',
-    price: 150,
-    imageUrl: '/ticket1.jpg',
-    isBid: true,
-    bidAmount: 1350,
-  },
-  // Add more tickets as needed
-];
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import EventHeader from "@/components/EventHeader";
+import NavBar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+import TicketCard from "@/components/TicketCard";
+import Footer from "@/components/Footer";
 
-export default function Events() {
+// Define types for the event data and tickets
+interface Ticket {
+  id: number;
+  section: string;
+  row: string;
+  seat: string;
+  price: number;
+  imageUrl: string;
+  isBid: boolean;
+  bidAmount?: number;
+}
+
+interface EventInfo {
+  id: number;
+  title: string;
+  description: string;
+  imgUrl: string;
+  status: string;
+  availableSeats: number;
+  capacity: number;
+  venue: string;
+  tickets: Ticket[];
+}
+
+export default function EventPage() {
+  const router = useRouter();
+
+  // State for event information
+  const [eventInfo, setEventInfo] = useState<EventInfo | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const mockTickets: Ticket[] = [
+    {
+      id: 1,
+      section: "Arena Standing",
+      row: "A",
+      seat: "10",
+      price: 130,
+      imageUrl: "/ticket1.jpg",
+      isBid: false,
+    },
+    {
+      id: 2,
+      section: "Section T14",
+      row: "B",
+      seat: "15",
+      price: 150,
+      imageUrl: "/ticket1.jpg",
+      isBid: true,
+      bidAmount: 145,
+    },
+    {
+      id: 3,
+      section: "Section U228",
+      row: "C",
+      seat: "5",
+      price: 95,
+      imageUrl: "/ticket1.jpg",
+      isBid: false,
+    },
+    {
+      id: 4,
+      section: "Section L224",
+      row: "D",
+      seat: "7",
+      price: 100,
+      imageUrl: "/ticket1.jpg",
+      isBid: true,
+      bidAmount: 120,
+    },
+  ];
+
+  const mockEvent: EventInfo = {
+    id: 1,
+    title: "Saturno World Tour",
+    description:
+      "Live from PR's Choliwood, Rauw Alejandro returns to his hometown to deliver an unforgettable experience!",
+    imgUrl: "/eventbg1.jpg",
+    status: "LIVE",
+    availableSeats: 2400,
+    capacity: 18500,
+    venue: "El Choli",
+    tickets: [],
+  };
+
+  const handleTicketClick = (ticketId: number) => {
+    router.push(`/events/ticket`);  // Navigates to /events/ticket?id={ticketId}
+  };
+
+  // Fetch event data from the backend
+
+  // useEffect(() => {
+  //   if (mockEvent.id) {
+  //     fetch(`/event/${mockEvent.id}`)
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error("Failed to fetch event data");
+  //         }
+  //         return response.json();
+  //       })
+  //       .then((data: EventInfo) => {
+  //         setEventInfo(data);
+  //         setLoading(false);
+  //       })
+  //       .catch((err) => {
+  //         setError(err.message);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [mockEvent.id]);
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading event details: {error}</div>;
+
   return (
     <div>
       {/* Navbar at the top */}
       <NavBar />
 
       {/* Event Header */}
-      <EventHeader
-        title="SATURNO"
-        description="After kicking off at Hard Rock Stadium in Miami, FL, Bad Bunny returns to his beloved home of San Juan, PR."
-        imgUrl='/eventbg1.jpg'  
-        liveStatus="LIVE"
-        availableSeats={2400}
-        capacity={18500}
-        venue="El Choli"
-      />
+      {mockEvent && (
+        <EventHeader
+          title={mockEvent.title}
+          description={mockEvent.description}
+          imgUrl={mockEvent.imgUrl}
+          liveStatus={mockEvent.status}
+          availableSeats={mockEvent.availableSeats}
+          capacity={mockEvent.capacity}
+          venue={mockEvent.venue}
+        />
+      )}
 
       <div className="min-h-screen bg-black text-white flex">
         {/* Sidebar */}
@@ -223,7 +162,12 @@ export default function Events() {
 
           {/* Ticket Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {tickets.map((ticket, index) => (
+            {mockTickets?.map((ticket, index) => (
+              <div
+              key={ticket.id}
+              className="cursor-pointer"
+              onClick={() => handleTicketClick(ticket.id)}  // Navigates to ticket detail page on click
+            >
               <TicketCard
                 key={index}
                 section={ticket.section}
@@ -234,10 +178,12 @@ export default function Events() {
                 isBid={ticket.isBid}
                 bidAmount={ticket.bidAmount}
               />
+              </div>
             ))}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
