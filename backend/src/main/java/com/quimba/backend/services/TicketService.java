@@ -13,7 +13,7 @@ public class TicketService {
     private TicketRepository ticketRepository;
 
     public List<Ticket> findTicketsForEvent(Long eventId) {
-        return ticketRepository.findByEventIdAndSoldFalse(eventId);
+        return ticketRepository.findByidAndSoldFalse(eventId);
     }
 
     public Ticket postTicketForSale(Ticket ticket) {

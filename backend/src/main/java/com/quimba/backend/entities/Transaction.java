@@ -12,7 +12,7 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "buyer_id")
+    @JoinColumn(name = "seller_id", referencedColumnName = "seller_id") // Added referencedColumnName for clarity
     private User buyer;
 
     @ManyToOne

@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "seller_id")
+    private Long id; // Changed from "Id" to "id" for consistency
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -24,5 +25,6 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String phone;
-}
 
+    // Constructors, Getters, Setters
+}
