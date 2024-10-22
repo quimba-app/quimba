@@ -2,25 +2,24 @@ package com.quimba.backend.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class Ticket {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
 
     @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private User seller;
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 
-    private double price;
-    private boolean sold;
+    private LocalDateTime transactionDate;
 
     // Constructors, Getters, Setters
 }
-

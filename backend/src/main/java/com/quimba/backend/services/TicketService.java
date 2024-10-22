@@ -9,19 +9,21 @@ import java.util.List;
 
 @Service
 public class TicketService {
-
     @Autowired
     private TicketRepository ticketRepository;
 
-    public void saveTicket(Ticket ticket) {
+    public List<Ticket> findTicketsForEvent(Long eventId) {
+        return ticketRepository.findByEventIdAndSoldFalse(eventId);
+    }
+
+    public Ticket postTicketForSale(Ticket ticket) {
+        return ticketRepository.save(ticket);
+    }
+
+    public void markTicketAsSold(Long ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        ticket.setSold(true);
         ticketRepository.save(ticket);
     }
-
-    public List<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
-    }
-
-    public void deleteTicket(Long ticketId) {
-        ticketRepository.deleteById(ticketId);
-    }
 }
+

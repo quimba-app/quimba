@@ -3,29 +3,44 @@ package com.quimba.backend.controllers;
 import com.quimba.backend.entities.User;
 import com.quimba.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserController {
-
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{user_id}")
-    public Optional<User> getById(@PathVariable("user_id") Long user_id){
-        return userService.getUserById(user_id);
-    }
-
     @PostMapping("/register")
-    public void registerUser(@RequestBody User user){
-        userService.registerUser(user);
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        User registeredUser = userService.registerUser(user);
+        return ResponseEntity.ok(registeredUser);
     }
 
-    @DeleteMapping("/{user_id}")
-    public void delete(@PathVariable("user_id") Long user_id){
-        userService.deleteUserById(user_id);
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestParam String email, @RequestParam String password) {
+        User user = userService.loginUser(email, password);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
+

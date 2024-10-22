@@ -1,50 +1,47 @@
 package com.quimba.backend.services;
 
 import com.quimba.backend.entities.User;
-import com.quimba.backend.entities.Role;
-import com.quimba.backend.repositories.RoleRepository;
 import com.quimba.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public User registerUser(User user) {
+        // Optionally: Check if the user with the email already exists
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("User already exists with this email");
+        }
+        return userRepository.save(user);
     }
 
-    public void registerUser(User user) {
-        // Encrypt the password
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        // Assign default role (e.g., ROLE_USER)
-        Role userRole = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Role not found"));
-        user.getRoles().add(userRole);
-
-        // Save the user
-        userRepository.save(user);
+    public User loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Invalid password");
+        }
+        return user;  // Return user if credentials match
     }
 
-    public void assignRoleToUser(Long userId, String roleName) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Role role = roleRepository.findByName(roleName).orElseThrow(() -> new RuntimeException("Role not found"));
-        user.getRoles().add(role);
-        userRepository.save(user);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 }
+
